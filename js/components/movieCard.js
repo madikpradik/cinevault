@@ -62,25 +62,30 @@
         
         favoriteBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            e.preventDefault();
             this.toggleFavorite(card);
         });
 
         watchlistBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            e.preventDefault();
             this.toggleWatchlist(card);
         });
 
         ratingBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            e.preventDefault();
             this.showRatingModal();
         });
 
         infoBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            e.preventDefault();
             this.showDetails();
         });
 
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (e) => {
+            e.preventDefault();
             this.showDetails();
         });
     }

@@ -19,6 +19,7 @@ class MovieAPI {
         });
 
         const url = `${CONFIG.TMDB_BASE}${endpoint}?${queryParams}`;
+        console.log('Fetching:', url); // Для отладки
         
         if (this.cache.has(url)) {
             const cached = this.cache.get(url);
@@ -29,7 +30,7 @@ class MovieAPI {
 
         try {
             const response = await fetch(url);
-            if (!response.ok) throw new Error('Ошибка загрузки');
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
             
             this.cache.set(url, {

@@ -86,19 +86,31 @@ function initCursor() {
 }
 
 async function openMovieModal(id, type = 'movie') {
+    console.log('Opening modal for:', id, type); // Для отладки
     const modal = document.getElementById('movieModal');
     const modalContent = document.getElementById('modalContent');
+    
+    if (!modal || !modalContent) {
+        console.error('Modal elements not found!');
+        return;
+    }
+    
     modalContent.innerHTML = '<div class="loader"></div>';
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
     
     try {
-        const details = type === 'movie' 
-            ? await movieAPI.getMovieDetails(id)
-            : await movieAPI.getTVDetails(id);
+        let details;
+        if (type === 'movie') {
+            details = await movieAPI.getMovieDetails(id);
+        } else {
+            details = await movieAPI.getTVDetails(id);
+        }
+        console.log('Details loaded:', details);
         modalContent.innerHTML = renderMovieDetail(details, type);
     } catch (error) {
-        modalContent.innerHTML = '<div class="error">Ошибка загрузки</div>';
+        console.error('Error loading movie details:', error);
+        modalContent.innerHTML = '<div class="error">Ошибка загрузки. Попробуйте позже.</div>';
     }
 }
 
